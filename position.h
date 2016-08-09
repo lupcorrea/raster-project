@@ -13,6 +13,8 @@ class Position {
         int getY() { return y; }
         void setX (int posX) { x = posX; }
         void setY (int posY) { x = posY; }
+        void incX () { x++; }
+        void incY () { y++; }
 };
 
 #endif
