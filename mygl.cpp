@@ -25,14 +25,15 @@ void drawLine (Pixel p1, Pixel p2) {
     /* Increments */
     int e = 2 * dy;
     int ne = 2 * (dy - dx);
-    int n = -dx;
+    int n = -2 * dx;
+    int nw = -2 * (dy + dx);
     
     /* Start the navigation pixel and plot it */
     Pixel p = p1;
     drawPixel (p);
     
     /* Determine the octant the line belongs to */
-    if (dx > 0 && dy > 0 && dx >= dy) {
+    if (dx > 0 && dy > 0 && dx > dy) {
         /* First octant */
         int d = 2 * dy - dx;
         while (p.getX() < p2.getX()) {
@@ -48,7 +49,7 @@ void drawLine (Pixel p1, Pixel p2) {
             }
             drawPixel (p);
         }
-    } else if (dx > 0 && dy > 0 && dx < dy) { 
+    } else if (dx > 0 && dy > 0 && dx <= dy) { 
         // Second octant
         int d = dy - 2 * dx;
         while (p.getY() > p2.getY()) {
@@ -56,15 +57,29 @@ void drawLine (Pixel p1, Pixel p2) {
                 // Line at midpoint's left
                 d += n;
                 p.decY();
-                printf ("[d > 0] %d\n", d);
             } else {
                 // Line at midpoint's right
                 d += ne;
                 p.incX();
                 p.decY();
-                printf ("[d <= 0] %d\n", d);
             }
         drawPixel (p);
         }
-    } 
+    } else if (dx <= 0 && dy > 0 && dx <= dy) {
+        // Third octant
+        int d = -dy - 2 * dx;
+        while (p.getY() > p2.getY()) {
+            if (d <= 0) {
+                // Line at midpoint's right
+                d += n;
+                p.decY();
+            } else {
+                // Line at midpoint's left
+                d += nw;
+                p.decX();
+                p.decY();
+            }
+            drawPixel (p);
+        }
+    }
 }
