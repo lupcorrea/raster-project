@@ -5,7 +5,7 @@
 /* ---------- Pixel operations ---------- */
 void drawPixel (Pixel p1) {
     // Find the position in the FB
-    int curr_pos = 4*p1.getX() + 4*IMAGE_WIDTH*p1.getY();
+    int curr_pos = 4 * p1.getX() + 4 * IMAGE_WIDTH * (IMAGE_HEIGHT - p1.getY());
     
     // Color the FB position
     if (p1.getX() < IMAGE_WIDTH && p1.getY() < IMAGE_HEIGHT) {
@@ -20,7 +20,7 @@ void drawPixel (Pixel p1) {
 void drawLine (Pixel p1, Pixel p2) {
     /* Deltas */
     int dx = p2.getX() - p1.getX();
-    int dy = p1.getY() - p2.getY();     // Inverted due to the inverted Y axis from the FB
+    int dy = p2.getY() - p1.getY();
     
     /* Increments */
     int e = 2 * dy;
@@ -28,9 +28,9 @@ void drawLine (Pixel p1, Pixel p2) {
     int n = -2 * dx;
     int nw = -2 * (dy + dx);
     int w = -2 * dy;
-    int sw = -2 * (dx + dy);
-    int s = -2 * dx;
-    int se = 2 * (dy - dx);
+    int sw = -2 * (dy - dx);
+    int s = 2 * dx;
+    int se = 2 * (dy + dx);
     
     /* Start the navigation pixel and plot it */
     Pixel p = p1;
@@ -42,46 +42,46 @@ void drawLine (Pixel p1, Pixel p2) {
         int d = 2 * dy - dx;
         while (p.getX() < p2.getX()) {
             if (d <= 0) {
-                // 
+                // Line below midpoint
                 d += e;
                 p.incX();
             } else {
-                // 
+                // Line above midpoint
                 d += ne;
                 p.incX();
-                p.decY();
+                p.incY();
             }
             drawPixel (p);
         }
     } else if (dx > 0 && dy > 0 && dx <= dy) { 
         // Second octant
         int d = dy - 2 * dx;
-        while (p.getY() > p2.getY()) {
+        while (p.getY() < p2.getY()) {
             if (d > 0) {
-                // 
+                // Line at midpoint's left
                 d += n;
-                p.decY();
+                p.incY();
             } else {
-                // 
+                // Line at midpoint's right
                 d += ne;
                 p.incX();
-                p.decY();
+                p.incY();
             }
         drawPixel (p);
         }
     } else if (dx <= 0 && dy > 0 && -dx <= dy) {
         // Third octant
         int d = -dy - 2 * dx;
-        while (p.getY() > p2.getY()) {
+        while (p.getY() < p2.getY()) {
             if (d <= 0) {
-                // 
+                // Line at midpoint's right
                 d += n;
-                p.decY();
+                p.incY();
             } else {
-                // 
+                // Line at midpoint's left
                 d += nw;
                 p.decX();
-                p.decY();
+                p.incY();
             }
             drawPixel (p);
         }
@@ -90,62 +90,61 @@ void drawLine (Pixel p1, Pixel p2) {
         int d = -2 * dy - dx;
         while (p.getX() > p2.getX()) {
             if (d > 0) {
-                // 
+                // Line below midpoint
                 d += w;
                 p.decX();
             } else {
-                // 
+                // Line above midpoint
                 d += nw;
                 p.decX();
-                p.decY();
+                p.incY();
             }
             drawPixel (p);
         }
     } else if (dx <= 0 && dy <= 0 && -dx > -dy) {
-        // Fifth octant *****************************************
-        int d = -2 * dy - dx;
+        // Fifth octant
+        int d = -2 * dy + dx;
         while (p.getX() > p2.getX()) {
             if (d > 0) {
-                // 
-                d += w;
-                p.decX();
-            } else {
-                // 
+                // Line below midpoint
                 d += sw;
                 p.decX();
-                p.incY();
+                p.decY();
+            } else {
+                // Line above midpoint
+                d += w;
+                p.decX();
             }
             drawPixel (p);
         }
     } else if (dx <= 0 && dy <= 0 && -dx <= -dy) {
-        // Sixth octant ******************************************
-        int d = -2 * dx - dy;
+        // Sixth octant
+        int d = 2 * dx - dy;
         while (p.getY() > p2.getY()) {
-            if (d > 0) {
-                // 
+            if (d <= 0) {
+                // Line at midpoint's left 
                 d += sw;
                 p.decX();
-                p.incY();
+                p.decY();
             } else {
-                // 
+                // Line at midpoint's right
                 d += s;
-                p.incY();
+                p.decY();
             }
             drawPixel (p);
         }
     } else if (dx > 0 && dy <= 0 && dx <= -dy) {
-        // printf ("[7]\n");
-        // Seventh octant *****************************************
-        int d = 2 * dy - dx;
-        while (p.getY() < p2.getY()) {
-            if (d > 0) {
+        // Seventh octant
+        int d = 2 * dy + dx;
+        while (p.getY() > p2.getY()) {
+            if (d <= 0) {
                 // Line at midpoint's left
                 d += s;
-                p.incY();
+                p.decY();
             } else {
                 // Line at midpoint's right
                 d += se;
-                p.incY();
+                p.decY();
                 p.incX();
             }
             drawPixel (p);
@@ -154,11 +153,11 @@ void drawLine (Pixel p1, Pixel p2) {
         // Eighth octant *******************************************
         int d = 2 * dy + dx;
         while (p.getX() < p2.getX()) {
-            if (d > 0) {
+            if (d < 0) {
                 // Line below midpoint
                 d += se;
                 p.incX();
-                p.incY();
+                p.decY();
             } else {
                 // Line at midpoint's right
                 d += e;

@@ -1,6 +1,8 @@
 #ifndef _PIXEL_H_
 #define _PIXEL_H_
 
+#include "definitions.h"
+
 class Pixel {
     int x;
     int y;
