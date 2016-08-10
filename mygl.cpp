@@ -167,3 +167,10 @@ void drawLine (Pixel p1, Pixel p2) {
         }
     }
 }
+
+/* ---------- Triangle operations ---------- */
+void drawTriangle (Pixel p1, Pixel p2, Pixel p3) {
+    drawLine (p1, p2);
+    drawLine (p2, p3);
+    drawLine (p3, p1);
+}
