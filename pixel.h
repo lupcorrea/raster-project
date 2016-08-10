@@ -29,6 +29,8 @@ class Pixel {
         void setY (int a) { y = a; }
         void incX () { x++; }
         void incY () { y++; }
+        void decX () { x--; }
+        void decY () { y--; }
 };
 
 #endif

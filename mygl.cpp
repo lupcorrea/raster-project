@@ -1,5 +1,6 @@
 #include "mygl.h"
 #include "definitions.h"
+#include <stdio.h>
 
 /* ---------- Pixel operations ---------- */
 void drawPixel (Pixel p1) {
@@ -17,11 +18,27 @@ void drawPixel (Pixel p1) {
 
 /* ---------- Line operations ---------- */
 void drawLine (Pixel p1, Pixel p2) {
+    int dx = p2.getX() - p1.getX();
+    int dy = p1.getY() - p2.getY();
+    
+    int d = 2 * dy - dx;
+    
+    int e = 2 * dy;
+    int ne = 2 * (dy - dx);
+    
     Pixel p = p1;
     
     drawPixel (p);
+    int i = 0;
     while (p.getX() < p2.getX()) {
-        p.incX();
+        if (d <= 0) {
+            d += e;
+            p.incX();
+        } else {
+            d += ne;
+            p.incX();
+            p.decY();
+        }
         drawPixel (p);
     }
 }
