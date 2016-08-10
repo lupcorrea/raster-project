@@ -1,21 +1,34 @@
 #ifndef _PIXEL_H_
 #define _PIXEL_H_
 
-#include "Position.h"
-#include "Color.h"
-
 class Pixel {
-    Position pos;
-    Color col;
+    int x;
+    int y;
+    int r;
+    int g;
+    int b;
+    int a;
     
     public:
-        Pixel (int x, int y, int r, int g, int b, int a = 255) :
-            pos (x, y), col (r, g, b, a) { }
+        Pixel (int mx, int my, int mr, int mg, int mb, int ma=255) {
+            x = mx;
+            y = my;
+            r = mr;
+            g = mg;
+            b = mb;
+            a = ma;
+        }
     
-        Position getPosition () { return pos; }
-        Color getCol () { return col; }
-        void setPosition (Position newPos) { pos = newPos; }
-        void setColor (Color newCol) { col = newCol; }
+        int getX () { return x; }
+        int getY () { return y; }
+        int getR () { return r; }
+        int getG () { return g; }
+        int getB () { return b; }
+        int getA () { return a; }
+        void setX (int a) { x = a; }
+        void setY (int a) { y = a; }
+        void incX () { x++; }
+        void incY () { y++; }
 };
 
 #endif
