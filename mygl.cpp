@@ -18,27 +18,53 @@ void drawPixel (Pixel p1) {
 
 /* ---------- Line operations ---------- */
 void drawLine (Pixel p1, Pixel p2) {
+    /* Deltas */
     int dx = p2.getX() - p1.getX();
-    int dy = p1.getY() - p2.getY();
+    int dy = p1.getY() - p2.getY();     // Inverted due to the inverted Y axis from the FB
     
-    int d = 2 * dy - dx;
-    
+    /* Increments */
     int e = 2 * dy;
     int ne = 2 * (dy - dx);
+    int n = -dx;
     
+    /* Start the navigation pixel and plot it */
     Pixel p = p1;
-    
     drawPixel (p);
-    int i = 0;
-    while (p.getX() < p2.getX()) {
-        if (d <= 0) {
-            d += e;
-            p.incX();
-        } else {
-            d += ne;
-            p.incX();
-            p.decY();
+    
+    /* Determine the octant the line belongs to */
+    if (dx > 0 && dy > 0 && dx >= dy) {
+        /* First octant */
+        int d = 2 * dy - dx;
+        while (p.getX() < p2.getX()) {
+            if (d <= 0) {
+                // Line below midpoint
+                d += e;
+                p.incX();
+            } else {
+                // Line above midpoint
+                d += ne;
+                p.incX();
+                p.decY();
+            }
+            drawPixel (p);
         }
+    } else if (dx > 0 && dy > 0 && dx < dy) { 
+        // Second octant
+        int d = dy - 2 * dx;
+        while (p.getY() > p2.getY()) {
+            if (d > 0) {
+                // Line at midpoint's left
+                d += n;
+                p.decY();
+                printf ("[d > 0] %d\n", d);
+            } else {
+                // Line at midpoint's right
+                d += ne;
+                p.incX();
+                p.decY();
+                printf ("[d <= 0] %d\n", d);
+            }
         drawPixel (p);
-    }
+        }
+    } 
 }
