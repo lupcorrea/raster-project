@@ -24,6 +24,7 @@ void setNextColor (Pixel p1, Pixel p2, Pixel *p) {
     if (dy < 0) dy *= -1;
     if (dx < 0) dx *= -1;
     
+    
     if (dx > dy) {
         dx = p2.getX() - p1.getX();
         int currPos = (*p).getX() - p1.getX();
