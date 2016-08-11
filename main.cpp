@@ -6,17 +6,17 @@ void MyGlDraw(void)
 	//*************************************************************************
 	// Chame aqui as funções do mygl.h
 	//*************************************************************************
-    Pixel p0 (250, 250, 255, 0, 0, 255);
-    Pixel p1 (500, 300, 255, 0, 0, 255);
-    Pixel p2 (300, 500, 255, 0, 0, 255);
-    Pixel p3 (200, 500, 255, 0, 0, 255);
+    Pixel p0 (250, 250, 0, 0, 0, 255);
+    Pixel p1 (500, 300, 0, 0, 255, 255);
+    Pixel p2 (300, 500, 0, 255, 0, 255);
+    Pixel p3 (200, 500, 0, 255, 255, 255);
     Pixel p4 (100, 300, 255, 0, 0, 255);
-    Pixel p5 (100, 200, 255, 0, 0, 255);
-    Pixel p6 (200, 100, 255, 0, 0, 255);
-    Pixel p7 (300, 100, 255, 0, 0, 255);
-    Pixel p8 (500, 200, 255, 0, 0, 255);
+    Pixel p5 (100, 200, 255, 0, 255, 255);
+    Pixel p6 (200, 100, 255, 255, 0, 255);
+    Pixel p7 (300, 100, 255, 255, 255, 255);
+    Pixel p8 (500, 200, 125, 125, 125, 255);
     
-    /*
+    /* *
     drawPixel (p0);
     drawPixel (p1);
     drawPixel (p2);
@@ -27,7 +27,7 @@ void MyGlDraw(void)
     drawPixel (p7);
     drawPixel (p8);
     
-    
+    /* */
     drawLine (p0, p1);
     drawLine (p0, p2);
     drawLine (p0, p3);
@@ -36,7 +36,7 @@ void MyGlDraw(void)
     drawLine (p0, p6);
     drawLine (p0, p7);
     drawLine (p0, p8);
-    /* */
+    /* *
     
     drawTriangle (p0, p1, p2);
     drawTriangle (p0, p2, p3);
@@ -46,6 +46,7 @@ void MyGlDraw(void)
     drawTriangle (p0, p6, p7);
     drawTriangle (p0, p7, p8);
     drawTriangle (p0, p8, p1);
+    /* */
 }
 
 //-----------------------------------------------------------------------------

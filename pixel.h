@@ -27,6 +27,10 @@ class Pixel {
         int getG () { return g; }
         int getB () { return b; }
         int getA () { return a; }
+        void setR (int mr) { r = mr; }
+        void setG (int mg) { g = mg; }
+        void setB (int mb) { b = mb; }
+        void setA (int ma) { a = ma; }
         void setX (int a) { x = a; }
         void setY (int a) { y = a; }
         void incX () { x++; }

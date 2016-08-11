@@ -17,6 +17,29 @@ void drawPixel (Pixel p1) {
 }
 
 /* ---------- Line operations ---------- */
+void setNextColor (Pixel p1, Pixel p2, Pixel *p) {
+    int dx = p2.getX() - p1.getX();
+    int dy = p2.getY() - p1.getY();
+    
+    if (dy < 0) dy *= -1;
+    if (dx < 0) dx *= -1;
+    
+    if (dx > dy) {
+        dx = p2.getX() - p1.getX();
+        int currPos = (*p).getX() - p1.getX();
+        (*p).setR (p1.getR() + currPos * (p2.getR() - p1.getR())/dx);
+        (*p).setG (p1.getG() + currPos * (p2.getG() - p1.getG())/dx);
+        (*p).setB (p1.getB() + currPos * (p2.getB() - p1.getB())/dx);
+    } else {
+        dy = p2.getY() - p1.getY();
+        int currPos = (*p).getY() - p1.getY();
+        (*p).setR (p1.getR() + currPos * (p2.getR() - p1.getR())/dy);
+        (*p).setG (p1.getG() + currPos * (p2.getG() - p1.getG())/dy);
+        (*p).setB (p1.getB() + currPos * (p2.getB() - p1.getB())/dy);
+    }
+}
+
+
 void drawLine (Pixel p1, Pixel p2) {
     /* Deltas */
     int dx = p2.getX() - p1.getX();
@@ -51,6 +74,7 @@ void drawLine (Pixel p1, Pixel p2) {
                 p.incX();
                 p.incY();
             }
+            setNextColor (p1, p2, &p);
             drawPixel (p);
         }
     } else if (dx > 0 && dy > 0 && dx <= dy) { 
@@ -67,7 +91,8 @@ void drawLine (Pixel p1, Pixel p2) {
                 p.incX();
                 p.incY();
             }
-        drawPixel (p);
+            setNextColor (p1, p2, &p);
+            drawPixel (p);
         }
     } else if (dx <= 0 && dy > 0 && -dx <= dy) {
         // Third octant
@@ -83,6 +108,7 @@ void drawLine (Pixel p1, Pixel p2) {
                 p.decX();
                 p.incY();
             }
+            setNextColor (p1, p2, &p);
             drawPixel (p);
         }
     } else if (dx <= 0 && dy > 0 && -dx > dy) {
@@ -99,6 +125,7 @@ void drawLine (Pixel p1, Pixel p2) {
                 p.decX();
                 p.incY();
             }
+            setNextColor (p1, p2, &p);
             drawPixel (p);
         }
     } else if (dx <= 0 && dy <= 0 && -dx > -dy) {
@@ -115,6 +142,7 @@ void drawLine (Pixel p1, Pixel p2) {
                 d += w;
                 p.decX();
             }
+            setNextColor (p1, p2, &p);
             drawPixel (p);
         }
     } else if (dx <= 0 && dy <= 0 && -dx <= -dy) {
@@ -131,6 +159,7 @@ void drawLine (Pixel p1, Pixel p2) {
                 d += s;
                 p.decY();
             }
+            setNextColor (p1, p2, &p);
             drawPixel (p);
         }
     } else if (dx > 0 && dy <= 0 && dx <= -dy) {
@@ -147,6 +176,7 @@ void drawLine (Pixel p1, Pixel p2) {
                 p.decY();
                 p.incX();
             }
+            setNextColor (p1, p2, &p);
             drawPixel (p);
         }
     } else if (dx > 0 && dy <= 0 && dx > -dy) {
@@ -163,6 +193,7 @@ void drawLine (Pixel p1, Pixel p2) {
                 d += e;
                 p.incX();
             }
+            setNextColor (p1, p2, &p);
             drawPixel (p);
         }
     }
